@@ -15,11 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
 
-
 jimport('joomla.filesystem.file');
-
-$uri    = (string) Uri::getInstance();
-$return = urlencode(base64_encode($uri));
 
 HTMLHelper::_('stylesheet', 'media/com_sitemap/default.min.css', array('version' => 'auto'));
 ?>
@@ -28,7 +24,7 @@ HTMLHelper::_('stylesheet', 'media/com_sitemap/default.min.css', array('version'
 	<div class="row-fluid icons-block">
 		<div class="span2">
 			<a class="item"
-			   href="<?php echo Route::_('index.php?option=com_sitemap&task=generation&return=' . $return); ?>">
+			   href="<?php echo Route::_('index.php?option=com_sitemap&task=generation'); ?>">
 				<div class="img">
 					<span class="icon-play large-icon"></span>
 				</div>
@@ -53,7 +49,7 @@ HTMLHelper::_('stylesheet', 'media/com_sitemap/default.min.css', array('version'
 						<span class="icon-tree-2 large-icon"></span>
 					</div>
 					<div class="title text-error">
-						<?php echo Text::_('COM_SITEMAP_MAP_NOT_FOUND'); ?>
+						<?php echo Text::_('COM_SITEMAP_ERROR_MAP_NOT_FOUND'); ?>
 					</div>
 				</div>
 			<?php endif; ?>
@@ -71,7 +67,7 @@ HTMLHelper::_('stylesheet', 'media/com_sitemap/default.min.css', array('version'
 		</div>
 		<div class="span2">
 			<a class="item"
-			   href="<?php echo Route::_('index.php?option=com_config&view=component&component=com_sitemap&return=' . $return); ?>">
+			   href="<?php echo Route::_('index.php?option=com_config&view=component&component=com_sitemap'); ?>">
 				<div class="img">
 					<span class="icon-options large-icon"></span>
 				</div>

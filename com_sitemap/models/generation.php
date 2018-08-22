@@ -10,3 +10,22 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
+class SitemapModelGeneration extends BaseDatabaseModel
+{
+	/**
+	 * Method to generate sitemap.xml
+	 *
+	 * @return bool|int
+	 *
+	 * @since 1.0.0
+	 */
+	public function generate()
+	{
+
+		$this->setError('Function in development');
+
+		return false;
+	}
+}

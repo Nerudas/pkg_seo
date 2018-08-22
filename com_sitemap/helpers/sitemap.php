@@ -18,7 +18,6 @@ jimport('joomla.filesystem.file');
 
 class SitemapHelper extends CMSHelper
 {
-
 	/**
 	 * Configure the Linkbar.
 	 *
@@ -30,15 +29,12 @@ class SitemapHelper extends CMSHelper
 	 */
 	static function addSubmenu($vName)
 	{
-		$uri    = (string) Uri::getInstance();
-		$return = urlencode(base64_encode($uri));
-
 		JHtmlSidebar::addEntry(Text::_('COM_SITEMAP_HOME'),
 			'index.php?option=com_sitemap&view=home',
 			$vName == 'home');
 
 		JHtmlSidebar::addEntry(Text::_('COM_SITEMAP_GENERATION'),
-			'index.php?option=com_sitemap&task=generation&return=' . $return,
+			'index.php?option=com_sitemap&task=generation',
 			$vName == 'generation');
 
 		if (JFile::exists(JPATH_ROOT . '/sitemap.xml'))
@@ -54,7 +50,7 @@ class SitemapHelper extends CMSHelper
 
 
 		JHtmlSidebar::addEntry(Text::_('COM_SITEMAP_CONFIG'),
-			'index.php?option=com_config&view=component&component=com_sitemap&return=' . $return,
+			'index.php?option=com_config&view=component&component=com_sitemap',
 			$vName == 'config');
 	}
 }

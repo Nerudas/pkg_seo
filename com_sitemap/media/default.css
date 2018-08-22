@@ -51,3 +51,7 @@
 	margin-right: 0;
 	color: #2f96b4;
 }
+
+#system-message-container {
+	width: 100%;
+}
