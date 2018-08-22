@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <config>
-	<fieldset name="global" label="JGLOBAL_FIELDSET_OPTIONS">
-	</fieldset>
 	<fieldset name="permissions"
 			  label="JCONFIG_PERMISSIONS_LABEL"
 			  description="JCONFIG_PERMISSIONS_DESC">
