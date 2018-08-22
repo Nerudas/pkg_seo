@@ -11,3 +11,5 @@ Thank you for your understanding.
 
 
 ## Package Contents
+* **Sitemap Component**  
+Sitemap generation component
