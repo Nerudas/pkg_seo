@@ -18,6 +18,8 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 
+jimport('joomla.filesystem.file');
+
 class SitemapModelGeneration extends BaseDatabaseModel
 {
 	/**
@@ -28,6 +30,15 @@ class SitemapModelGeneration extends BaseDatabaseModel
 	 * @since  1.0.0
 	 */
 	protected $_plugins = null;
+
+	/**
+	 * Sitemap xml
+	 *
+	 * @var    string
+	 *
+	 * @since  1.0.0
+	 */
+	protected $_xml = null;
 
 	/**
 	 * Urls array
@@ -56,14 +67,46 @@ class SitemapModelGeneration extends BaseDatabaseModel
 		}
 
 		$urls = $this->getUrls();
+		$xml  = $this->getXML();
 
-		echo '<pre>', print_r($urls, true), '</pre>';
+		$file = JPATH_ROOT . '/sitemap.xml';
 
+		if (JFile::exists($file))
+		{
+			JFile::delete($file);
+		}
 
+		JFile::append($file, $xml);
 
-		$this->setError('Function in development');
+		return count($urls);
+	}
 
-		return false;
+	/**
+	 * Method to SiteMap xml file
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
+	protected function getXML()
+	{
+		if ($this->_xml === null)
+		{
+			$xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"/>');
+
+			foreach ($this->getUrls() as $registry)
+			{
+				$url = $xml->addChild('url');
+				foreach ($registry->toArray() as $name => $value)
+				{
+					$url->addChild($name, $value);
+				}
+			}
+
+			$this->_xml = $xml->asXML();
+		}
+
+		return $this->_xml;
 	}
 
 	/**
@@ -81,6 +124,16 @@ class SitemapModelGeneration extends BaseDatabaseModel
 			$router = $site->getRouter();
 			$config = ComponentHelper::getParams('com_sitemap');
 
+			$changefreqPriority = array(
+				'always'  => 1,
+				'hourly'  => 2,
+				'daily'   => 3,
+				'weekly'  => 4,
+				'monthly' => 5,
+				'yearly'  => 6,
+				'never'   => 7
+			);
+
 			$urls = array();
 			foreach ($this->getPlugins() as $name => $plugin)
 			{
@@ -93,11 +146,22 @@ class SitemapModelGeneration extends BaseDatabaseModel
 
 						if ($loc = $url->get('loc', false))
 						{
-							$loc        = trim(str_replace('administrator/', '', $router->build($loc)->toString()), '/');
-							$key        = (empty($loc)) ? 'default_page' : $loc;
+							$loc = trim(str_replace('administrator/', '', $router->build($loc)->toString()), '/');
+							$key = (empty($loc)) ? 'default_page' : $loc;
+
 							$changefreq = $url->get('changefreq', $config->get('changefreq', 'weekly'));
 							$priority   = $url->get('priority', $config->get('priority', '0.5'));
 							$lastmod    = $url->get('lastmod', false);
+
+							$exist = (isset($urls[$key])) ? $urls[$key] : false;
+
+							if ($exist)
+							{
+								$changefreq = ($changefreqPriority[$changefreq] < $changefreqPriority[$exist->get('changefreq')]) ?
+									$changefreq : $exist->get('changefreq');
+								$priority   = (floatval($priority) > floatval($exist->get('priority'))) ? $priority : $exist->get('priority');
+								$lastmod    = ($lastmod && $lastmod > $exist->get('lastmod')) ? $lastmod : $exist->get('lastmod');
+							}
 
 							$item             = new stdClass();
 							$item->loc        = Uri::root() . $loc;
