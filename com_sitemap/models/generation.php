@@ -218,8 +218,7 @@ class SitemapModelGeneration extends BaseDatabaseModel
 
 			$this->_plugins = $plugins;
 		}
-
-
+		
 		return $this->_plugins;
 	}
 
