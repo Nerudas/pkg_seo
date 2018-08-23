@@ -38,7 +38,7 @@ class SiteMapController extends BaseController
 			if (!$count = $model->generate())
 			{
 				$this->setError($model->getError());
-				$this->setMessage($this->getError(), 'error');
+				$this->setMessage(Text::_($this->getError()), 'error');
 				$this->setRedirect('index.php?option=com_sitemap');
 
 				return false;
