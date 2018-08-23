@@ -16,6 +16,7 @@
 	</languages>
 	<files>
 		<folder type="component" id="com_sitemap">com_sitemap</folder>
+		<folder type="plugin" id="menu" group="sitemap">plg_sitemap_menu</folder>
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="Search Engine Optimization Package">

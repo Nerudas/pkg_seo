@@ -13,3 +13,6 @@ Thank you for your understanding.
 ## Package Contents
 * **Sitemap Component**  
 Sitemap generation component
+
+* **Sitemap - Menu Plugin**  
+Plugin for adding menu items to the sitemap
