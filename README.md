@@ -16,3 +16,6 @@ Sitemap generation component
 
 * **Sitemap - Menu Plugin**  
 Plugin for adding menu items to the sitemap
+
+* **JZCron - Sitemap Plugin**  
+Sitemap Generation Plugin
