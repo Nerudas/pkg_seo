@@ -19,3 +19,6 @@ Plugin for adding menu items to the sitemap
 
 * **JZCron - Sitemap Plugin**  
 Sitemap Generation Plugin
+
+* **System - Menu Meta Image Plugin**  
+Plugin to add the meta image field to the menu item settings

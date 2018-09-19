@@ -18,6 +18,7 @@
 		<folder type="component" id="com_sitemap">com_sitemap</folder>
 		<folder type="plugin" id="menu" group="sitemap">plg_sitemap_menu</folder>
 		<folder type="plugin" id="sitemap" group="jzcron">plg_jzcron_sitemap</folder>
+		<folder type="plugin" id="menumetaimage" group="system">plg_system_menumetaimage</folder>
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="Search Engine Optimization Package">
