@@ -14,6 +14,8 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
 
+jimport('joomla.filesystem.folder');
+
 JLoader::register('FieldTypesFilesHelper', JPATH_PLUGINS . '/fieldtypes/files/helper.php');
 
 class plgSystemMenuMetaImage extends CMSPlugin
@@ -101,14 +103,20 @@ class plgSystemMenuMetaImage extends CMSPlugin
 		{
 			$menu         = $app->getMenu()->getActive();
 			$imagesHelper = new FieldTypesFilesHelper();
-			$imageFolder  = $this->images_root . '/' . $menu->id;
-			$metaImage    = $imagesHelper->getImage('meta', $imageFolder, false, false);
-			if ($metaImage)
+			if (!empty($menu->id))
 			{
-				$params = $menu->getParams();
-				$params->set('menu-meta_image', $metaImage);
+				$imageFolder = $this->images_root . '/' . $menu->id;
+				if (JFolder::exists($imageFolder))
+				{
+					$metaImage = $imagesHelper->getImage('meta', $imageFolder, false, false);
+					if ($metaImage)
+					{
+						$params = $menu->getParams();
+						$params->set('menu-meta_image', $metaImage);
 
-				$menu->setParams($params);
+						$menu->setParams($params);
+					}
+				}
 			}
 		}
 	}
